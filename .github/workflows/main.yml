@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: CI/CD portfolio webserver
 
 on:
   push:
@@ -32,5 +32,5 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            your-docker-hub-username/your-image-name:latest
-            your-docker-hub-username/your-image-name:${{ github.sha }}
+            ${{ secrets.DOCKER_USERNAME }}/portfolio-webserver:latest
+            ${{ secrets.DOCKER_USERNAME }}/portfolio-webserver:${{ github.sha }}
