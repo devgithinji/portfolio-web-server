@@ -32,12 +32,20 @@ jobs:
           host: ${{secrets.EC2_HOST}}
           username: ${{secrets.EC2_USERNAME}}
           key: ${{secrets.EC2_PRIVATE_KEY}}
-          script: |      
+          script: |
+            # remove stopped containers and dangling images
+            docker container prune -f && docker image prune -af
+            
+            # stop and remove existing container if running
+            docker stop portfolio-webserver 
+            docker rm portfolio-webserver
+            
+            # remove docker image
+            docker rmi densoftdev/portfolio-webserver:latest
+            
             # docker pull image
             docker pull ${{ secrets.DOCKER_USERNAME }}/portfolio-webserver:latest
-            # stop container
-            docker stop portfolio-webserver
+            
             # run docker container
             docker run --name portfolio-webserver -d -p 80:80 ${{ secrets.DOCKER_USERNAME }}/portfolio-webserver:latest
-            # remove stopped containers and dangling images
-            docker container prune -f && docker image prune -f 
+          
