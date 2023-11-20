@@ -47,5 +47,5 @@ jobs:
             docker pull ${{ secrets.DOCKER_USERNAME }}/portfolio-webserver:latest
             
             # run docker container
-            docker run --name portfolio-webserver -d --network projectsnet -p 80:80 ${{ secrets.DOCKER_USERNAME }}/portfolio-webserver:latest
+            docker run --name portfolio-webserver -d --network projectsnet -p 80:80 -p 443:443 ${{ secrets.DOCKER_USERNAME }}/portfolio-webserver:latest
           
